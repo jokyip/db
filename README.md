@@ -5,7 +5,7 @@ Create a mongo database
 
 Server API
 ---------------------------------------------------------
-## dbInstance
+## db
 		
 * api
 
@@ -17,7 +17,7 @@ Server API
 Configuration
 =============
 
-*   git clone https://github.com/jokyip/dbServer.git
+*   git clone https://github.com/jokyip/db.git
 *   cd db
 *   npm install && bower install
 *   update environment variables in config/env/development.coffee for server
