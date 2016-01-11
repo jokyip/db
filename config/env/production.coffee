@@ -26,4 +26,4 @@ module.exports =
 		default:
 			roles:	['dbOwner']			
 	log:
-		level:		'silly'
+		level:		'info'
