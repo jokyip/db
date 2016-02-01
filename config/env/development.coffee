@@ -1,4 +1,5 @@
 path = '/db'
+agent = require 'https-proxy-agent'
 
 module.exports =
 	path:			path
@@ -9,7 +10,10 @@ module.exports =
 	oauth2:
 		verifyURL:			"https://mob.myvnc.com/org/oauth2/verify/"
 		tokenURL:			"https://mob.myvnc.com/org/oauth2/token/"
-		scope:				[ "https://mob.myvnc.com/org/users"]		
+		scope:				[ "https://mob.myvnc.com/org/users"]
+	http:
+		opts:
+			agent:	new agent("http://proxy1.scig.gov.hk:8080")			
 	models:
 		connection: 'mongo'
 		migrate:	'alter'
