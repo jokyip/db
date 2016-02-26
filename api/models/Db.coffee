@@ -5,14 +5,11 @@ module.exports =
 	schema: 		true
 	
 	autoCreatedAt:	true
-	
-	autoPK:	false
   
 	attributes:
   
 		name:
 			type: 'string'
-			primaryKey:	true
 			required:	true
 			unique: 	true
 		createdBy:
