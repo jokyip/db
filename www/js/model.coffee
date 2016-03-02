@@ -24,7 +24,11 @@ angular.module 'starter.model', ['PageableAR']
 				_.each res.results, (value, key) =>
 					res.results[key] = new Db res.results[key]
 				return res
+				
+		class MyDbList extends DbList
+			$urlRoot: "#{env.serverUrl()}/api/db/me"		
 	
 		User:	User
 		Db:	Db
 		DbList:	DbList
+		MyDbList:	MyDbList

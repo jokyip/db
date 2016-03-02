@@ -30,4 +30,10 @@ module.exports =
 			.then (records) ->
 				sails.services.db.remove records[0]
 				res.ok()
-			.catch res.serverError		
+			.catch res.serverError
+			
+	findByMe: (req, res) ->
+		sails.services.crud
+			.find(req)
+			.then res.ok
+			.catch res.serverError				

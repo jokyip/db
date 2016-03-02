@@ -1,7 +1,10 @@
 <ion-view>
 	<ion-nav-buttons side="left">
       <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-      <h1 class='title'>All Database</h1>
+      <h1 class='title'>My Database</h1>
+      <div class="buttons">
+        <button class="button icon-right ion-plus-round" on-tap="$event.stopPropagation(); create()"></button>
+      </div>	
     </ion-nav-buttons>
 	<ion-content>
 		<ion-list>
@@ -14,6 +17,8 @@
 						{{model.createdBy}}
 					</div>
 				</div>
+				<ion-option-button class="button button-positive icon-left ion-edit" on-tap="$event.stopPropagation(); edit('{{model.id}}')">Edit</ion-option-button>
+				<ion-option-button class="button button-assertive icon-left ion-trash-b" on-tap="$event.stopPropagation(); delete(model)">Delete</ion-option-button>
 			</ion-item>
 		</ion-list>
 		<ion-infinite-scroll ng-if="collection.state.skip < collection.state.count" on-infinite="loadMore()">

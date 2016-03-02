@@ -30,7 +30,20 @@ angular.module 'starter', ['ionic', 'starter.controller', 'starter.model', 'util
 				cliModel: 'model'	
 				collection: (cliModel) ->
 					ret = new cliModel.DbList()
-					ret.$fetch()		
+					ret.$fetch()
+					
+		$stateProvider.state 'app.dbMe',
+			url: "/db/me"
+			cache: false
+			views:
+				'menuContent':
+					templateUrl: "templates/db/listMe.html"
+					controller: 'DbListCtrl'
+			resolve:
+				cliModel: 'model'	
+				collection: (cliModel) ->
+					ret = new cliModel.MyDbList()
+					ret.$fetch()				
 					
 		$stateProvider.state 'app.dbCreate',
 			url: "/db/create"
