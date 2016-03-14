@@ -12,6 +12,7 @@ Server API
 	```
 	get /api/db - list your owned database for specified pagination/sorting parameters skip, limit, sort
 	post /api/db - create a database with the specified attributes excluding id
+	put /api/db/:id - update database of the specified id
     delete /api/db/:id - delete database of the specified id
 
 Configuration
