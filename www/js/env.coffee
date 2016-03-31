@@ -1,4 +1,4 @@
-io.sails.url = 'http://localhost:3000'
+io.sails.url = 'http://localhost:3001'
 io.sails.path = "/db/socket.io"
 io.sails.useCORSRouteToGetCookie = false
 
@@ -13,7 +13,7 @@ module.exports =
 	imUrl: () ->
 		"https://mppsrc.ogcio.hksarg/im"
 	serverUrl: (path = @path) ->
-		"http://localhost:3000"
+		"http://localhost:3001"
 	path: 'db'		
 	oauth2:
 		authUrl: "#{@authUrl}/org/oauth2/authorize/"

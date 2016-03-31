@@ -3,8 +3,7 @@ agent = require 'https-proxy-agent'
 
 module.exports =
 	path:			path
-	url:			"http://localhost:3000"
-	port: 			3000
+	port: 			3001
 	promise:
 		timeout:	10000 # ms
 	oauth2:

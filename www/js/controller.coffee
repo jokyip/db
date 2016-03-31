@@ -16,7 +16,7 @@ DbCtrl = ($scope, model, $location) ->
 				.catch (err) ->
 					alert {data:{error:"Name already exists. Please choose other name."}}
 	
-DbListCtrl = ($scope, collection, $location) ->
+DbListCtrl = ($scope, collection, $location, $ionicPopup) ->
 	_.extend $scope,
 		collection: collection
 		create: ->
@@ -24,7 +24,10 @@ DbListCtrl = ($scope, collection, $location) ->
 		edit: (id) ->
 			$location.url "/db/edit/#{id}"	
 		delete: (obj) ->
-			collection.remove obj
+			$ionicPopup.confirm title: 'Delete Database', template: 'Please note that all data stored in this database will be loss. Do you still proceed?'
+				.then (res) ->
+					if res
+						collection.remove obj
 		loadMore: ->
 			collection.$fetch()
 				.then ->
@@ -37,4 +40,4 @@ config = ->
 angular.module('starter.controller', ['ionic', 'ngCordova', 'http-auth-interceptor', 'starter.model', 'platform']).config [config]
 angular.module('starter.controller').controller 'MenuCtrl', ['$scope', MenuCtrl]
 angular.module('starter.controller').controller 'DbCtrl', ['$scope', 'model', '$location', DbCtrl]
-angular.module('starter.controller').controller 'DbListCtrl', ['$scope', 'collection', '$location', DbListCtrl]
+angular.module('starter.controller').controller 'DbListCtrl', ['$scope', 'collection', '$location', '$ionicPopup', DbListCtrl]
