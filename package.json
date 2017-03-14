@@ -8,6 +8,7 @@
     "coffee-script": "^1.12.4",
     "dateformat": "^2.0.0",
     "ejs": "^2.5.6",
+    "helmet-csp": "^1.2.2",
     "https-proxy-agent": "^1.0.0",
     "include-all": "^4.0.0",
     "lodash": "^4.17.4",

@@ -1,25 +1,35 @@
-express = require 'express'
-			
-module.exports = 
+csp = require 'helmet-csp'
+
+module.exports =
 	http:
 		middleware:
-			static: express.static('www')
-			resHeader: (req, res, next) ->
-				res.set sails.config.csp
-				next()
+			csp: (req, res, next)->
+				host = req.headers['x-forwarded-host'] || req.headers['host']
+				src = [
+					"'self'"
+					"filesystem:"
+					"data:"
+					"http://#{host}"
+					"https://#{host}"
+					"blob:"
+				]
+				ret = csp
+					directives:
+						defaultSrc: src
+						connectSrc: [ "ws://#{host}", "wss://#{host}" ].concat src
+						styleSrc: [ "'unsafe-inline'" ].concat src
+						scriptSrc: [ "'unsafe-inline'", "'unsafe-eval'" ].concat src
+				ret req, res, next
 			order: [
-				'startRequestTimer'
 				'cookieParser'
 				'session'
-				'resHeader'
 				'bodyParser'
 				'compress'
 				'methodOverride'
-				'$custom'
+				'csp'
 				'router'
-				'static'
 				'www'
 				'favicon'
 				'404'
 				'500'
-			]
+			]			
