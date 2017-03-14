@@ -8,6 +8,7 @@
     "coffee-script": "^1.12.4",
     "dateformat": "^2.0.0",
     "ejs": "^2.5.6",
+    "express": "^4.13.3",
     "gulp-concat": "^2.6.1",
     "gulp-rework": "^1.2.0",
     "helmet-csp": "^1.2.2",

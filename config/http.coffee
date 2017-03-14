@@ -1,8 +1,10 @@
+express = require 'express'
 csp = require 'helmet-csp'
 
 module.exports =
 	http:
 		middleware:
+			static: express.static('www')
 			csp: (req, res, next)->
 				host = req.headers['x-forwarded-host'] || req.headers['host']
 				src = [
@@ -28,6 +30,7 @@ module.exports =
 				'methodOverride'
 				'csp'
 				'router'
+				'static'
 				'www'
 				'favicon'
 				'404'
