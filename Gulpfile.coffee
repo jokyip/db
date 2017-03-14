@@ -1,71 +1,52 @@
-argv = require('yargs').argv
+_ = require 'lodash'
 gulp = require 'gulp'
-bower = require 'bower'
-sass = require 'gulp-sass'
-minifyCss = require 'gulp-minify-css'
-rename = require 'gulp-rename'
-sh = require 'shelljs'
 browserify = require 'browserify'
-bower = require 'gulp-bower'
 source = require 'vinyl-source-stream'
-uglify = require 'gulp-uglify'
-gulpif = require 'gulp-if'
+coffee = require 'gulp-coffee'
+gutil = require 'gulp-util'
+sass = require 'gulp-sass'
+rename = require 'gulp-rename'
+fs = require 'fs'
+util = require 'util'
+concat = require 'gulp-concat'
+rework = require 'gulp-rework'
+imprt = require 'rework-import'
+reworkNPM = require 'rework-npm'
 templateCache = require 'gulp-angular-templatecache'
 
-paths = sass: ['./scss/**/*.scss']
+gulp.task 'default', ['css', 'coffee']
 
-gulp.task 'default', ['sass', 'coffee']
+gulp.task 'config', ->
+  params = _.pick process.env, 'ROOTURL', 'OAUTH2_SCOPE', 'AUTHURL', 'CLIENT_ID'
+  fs.writeFileSync 'www/js/config.json', util.inspect(params)
 
-gulp.task 'sass', (done) ->
-  gulp.src('./scss/ionic.app.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('./www/css/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
-    
-gulp.task 'copy', ->
-  gulp.src(if argv.prod then './www/js/config/production.coffee' else './www/js/config/development.coffee')
-    .pipe(rename('env.coffee'))
-    .pipe(gulp.dest('./www/js/'))
-	   
-gulp.task 'coffee', ->
+gulp.task 'cssAll', ->
+  gulp.src 'www/css/index.css'
+    .pipe rework reworkNPM shim: 'angular-toastr': 'dist/angular-toastr.css'
+    .pipe concat 'css.css'
+    .pipe gulp.dest 'www/css/'
+
+gulp.task 'scssAll', ->
+  gulp.src 'scss/ionic.app.scss'
+    .pipe sass()
+    .pipe concat 'scss.css'
+    .pipe gulp.dest 'www/css/'
+
+gulp.task 'css', ['cssAll', 'scssAll'], ->
+  gulp.src ['www/css/css.css', 'www/css/scss.css']
+    .pipe concat 'ionic.app.css'
+    .pipe gulp.dest 'www/css'
+
+gulp.task 'coffee', ['config', 'template'], ->
   browserify(entries: ['./www/js/index.coffee'])
-  	.transform('coffeeify')
+    .transform('coffeeify')
     .transform('debowerify')
     .bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('./www/js/'))
-  
+
 gulp.task 'template', ->
-  gulp.src('./www/templates/**/*.html')
-  	.pipe(templateCache(root: 'templates', standalone: true))
-  	.pipe(gulp.dest('./www/js/'))
-  	  
-gulp.task 'pre-android', ->
-  argv.prod = true
-  sh.exec "cordova platform rm android"
-  sh.exec "cordova platform add android"
-  sh.exec "ionic resources android"
-  
-gulp.task 'android', ['pre-android', 'plugin', 'sass', 'coffee'], ->
-  sh.exec "cordova build android"
-
-gulp.task 'pre-browser', ->
-  sh.exec "cordova platform rm browser"
-  sh.exec "cordova platform add browser"
-  sh.exec "ionic resources browser"
-  
-gulp.task 'browser', ['sass', 'coffee'], ->
-  sh.exec "cordova build browser"
-
-gulp.task 'plugin', ->
-  for plugin in require('./package.json').cordovaPlugins
-  	sh.exec "cordova plugin add #{plugin}"
-  
-gulp.task 'clean', ->
-  sh.exec "cordova platform rm browser"
-  sh.exec "cordova platform rm android"
-  sh.exec "rm -rf node_modules www/lib resources plugins"
+  gulp.src 'www/templates/**/*.html'
+    .pipe templateCache root: 'templates', standalone: true
+    .pipe gulp.dest 'www/js'
+  ]

@@ -17,6 +17,7 @@
     "passport-http-bearer": "^1.0.1",
     "promise": "^7.1.1",
     "rc": "^1.1.7",
+    "rework-import": "^2.1.0",
     "sails": "~0.12.13",
     "sails-disk": "^0.10.10",
     "sails-mongo": "^0.12.2",
