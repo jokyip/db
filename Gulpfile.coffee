@@ -49,4 +49,3 @@ gulp.task 'template', ->
   gulp.src 'www/templates/**/*.html'
     .pipe templateCache root: 'templates', standalone: true
     .pipe gulp.dest 'www/js'
-  ]
