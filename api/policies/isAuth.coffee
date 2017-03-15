@@ -18,14 +18,7 @@ verifyToken = (token) ->
 				result = _.intersection scope, oauth2.scope
 				if result.length != oauth2.scope.length
 					return reject('Unauthorized access to #{oauth2.scope}')
-					
-				# create user
-				# otherwise check if user registered before (defined in model.User or not)
-				user = _.pick res.body.user, 'username', 'email'
-				sails.models.user
-					.findOrCreate user
-					.populateAll()
-					.then fulfill, reject
+				fulfill res.body.user
 			.catch reject
 			
 passport.use 'bearer', new bearer.Strategy {}, (token, done) ->
