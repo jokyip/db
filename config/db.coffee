@@ -1,6 +1,12 @@
+_.forEach ['ADMIN_DB','ADMIN_ROLE'], (prop) ->
+	if not (prop of process.env)
+  	throw new Error "process.env.#{prop} not yet defined"
+
 module.exports =
 	dbAdmin:
-		url:		"mongodb://admin:Pass1234!@localhost/admin"
+		url:		process.env.ADMIN_DB
 	db:
 		default:
-			roles:	['dbOwner']
+			roles:	process.env.ADMIN_ROLE?.split(' ') || [
+        'dbOwner'
+      ]
