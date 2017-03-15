@@ -6,19 +6,19 @@ angular.module 'starter.model', ['PageableAR']
 	.factory 'model', (pageableAR, $filter) ->
 
 		class User extends pageableAR.Model
-			$urlRoot: "#{env.serverUrl()}/org/api/users/"
+			$urlRoot: "org/api/users/"
 				
 			@me: ->
 				(new User(username: 'me/')).$fetch()	
 		
 		# Db model
 		class Db extends pageableAR.Model
-			$urlRoot: "#{env.serverUrl()}/api/db"
+			$urlRoot: "api/db"
 			
 		class DbList extends pageableAR.PageableCollection
 			model: Db
 		
-			$urlRoot: "#{env.serverUrl()}/api/db"
+			$urlRoot: "api/db"
 			
 			$parse: (res, opts) ->
 				_.each res.results, (value, key) =>
@@ -26,7 +26,7 @@ angular.module 'starter.model', ['PageableAR']
 				return res
 				
 		class MyDbList extends DbList
-			$urlRoot: "#{env.serverUrl()}/api/db/me"		
+			$urlRoot: "api/db/me"		
 	
 		User:	User
 		Db:	Db

@@ -1,24 +1,31 @@
+_ = require 'lodash'
 passport = require 'passport'
 bearer = require 'passport-http-bearer'
-Promise = require 'promise'
+Promise = require 'bluebird'
+needle = Promise.promisifyAll require 'needle'
 
 # check if oauth2 bearer is available
 verifyToken = (token) ->
 	oauth2 = sails.config.oauth2
 	
 	return new Promise (fulfill, reject) ->
-		sails.services.rest.get token, oauth2.verifyURL			
+		opts = headers:
+			Authorization: "Bearer #{token}"
+		needle.getAsync oauth2.verifyURL, opts
 			.then (res) -> 
 				# check required scope authorized or not
-				scope = res.body.scope.split(' ')				
+				scope = res.body.scope.split(' ')
 				result = _.intersection scope, oauth2.scope
 				if result.length != oauth2.scope.length
 					return reject('Unauthorized access to #{oauth2.scope}')
 					
 				# create user
 				# otherwise check if user registered before (defined in model.User or not)
-				user = _.pick res.body.user, 'url', 'username', 'email'
-				fulfill(user)
+				user = _.pick res.body.user, 'username', 'email'
+				sails.models.user
+					.findOrCreate user
+					.populateAll()
+					.then fulfill, reject
 			.catch reject
 			
 passport.use 'bearer', new bearer.Strategy {}, (token, done) ->
@@ -30,6 +37,10 @@ passport.use 'bearer', new bearer.Strategy {}, (token, done) ->
 	verifyToken(token).then fulfill, reject
 	
 module.exports = (req, res, next) ->
+	if req.isSocket
+		req = _.extend req, _.pick(require('http').IncomingMessage.prototype, 'login', 'logIn', 'logout', 'logOut', 'isAuthenticated', 'isUnauthenticated')
 	middleware = passport.authenticate('bearer', { session: false })
 	middleware req, res, ->
+		if req.isSocket
+			req.socket.user = req.user
 		next()
