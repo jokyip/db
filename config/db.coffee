@@ -1,3 +1,5 @@
+_=require 'lodash'
+
 _.forEach ['ADMIN_DB','ADMIN_ROLE'], (prop) ->
 	if not (prop of process.env)
   	throw new Error "process.env.#{prop} not yet defined"
