@@ -1,5 +1,6 @@
 express = require 'express'
 csp = require 'helmet-csp'
+authUrl = require('url').parse(process.env.AUTHURL)
 
 module.exports =
 	http:
@@ -14,6 +15,7 @@ module.exports =
 					"http://#{host}"
 					"https://#{host}"
 					"blob:"
+					"#{authUrl.protocol}//#{authUrl.host}"
 				]
 				ret = csp
 					directives:
