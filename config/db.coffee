@@ -1,4 +1,4 @@
-_=require 'lodash'
+_ = require 'lodash'
 
 _.forEach ['ADMIN_DB','ADMIN_ROLE'], (prop) ->
 	if not (prop of process.env)

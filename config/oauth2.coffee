@@ -1,4 +1,4 @@
-_=require 'lodash'
+_ = require 'lodash'
 
 _.forEach ['VERIFYURL','OAUTH2_SCOPE'], (prop) ->
 	if not (prop of process.env)
