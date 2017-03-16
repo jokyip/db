@@ -1,5 +1,5 @@
 env = require '../../env.coffee'
-req = require 'supertest-as-promised'
+request = require 'supertest-as-promised'
 oauth2 = require 'oauth2_client'
 Promise = require 'bluebird'
 
@@ -27,14 +27,12 @@ describe 'DbController', ->
 			
 		it 'Read Db', ->
 			request(sails.hooks.http.app)
-			.get("/api/db/unitTest")
+			.get("/api/db/#{id}")
 			.set('Authorization',"Bearer #{token}")
 			.expect 200
 			
 		it 'Delete Db', (done) ->
 			request(sails.hooks.http.app)
-			.del("/api/db/unitTest")
+			.del("/api/db/#{id}")
 			.set('Authorization',"Bearer #{token}")
 			.expect 200
-			.end ->
-				setTimeout done, 1000

@@ -1,7 +1,7 @@
 [
   'TOKENURL'
   'OAUTH2_SCOPE'
-  'CLIENT_ID'
+  'TEST_CLIENT_ID'
   'CLIENT_SECRET'
   'USER_ID'
   'USER_SECRET'
@@ -14,7 +14,7 @@ module.exports =
   tokenUrl: process.env.TOKENURL
   scope: process.env.OAUTH2_SCOPE.split ' '
   client:
-    id: process.env.CLIENT_ID
+    id: process.env.TEST_CLIENT_ID
     secret: process.env.CLIENT_SECRET
   user:
     id: process.env.USER_ID
