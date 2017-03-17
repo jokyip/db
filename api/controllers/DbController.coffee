@@ -6,9 +6,9 @@ module.exports =
 		data = actionUtil.parseValues(req)
 			
 		Model.create(data)
-			.then ->
+			.then (model) ->
 				sails.services.db.add data
-				res.created(data)
+				res.created(model)
 			.catch res.serverError
 			
 	update: (req, res) ->
