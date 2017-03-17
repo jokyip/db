@@ -42,9 +42,4 @@ angular
 				collection.$fetch()
 					.then ->
 						$scope.$broadcast('scroll.infiniteScrollComplete')
-					.catch alert	
-	
-angular.module('starter.controller', ['ionic', 'ngCordova', 'http-auth-interceptor', 'starter.model', 'platform']).config [config]
-angular.module('starter.controller').controller 'MenuCtrl', ['$scope', MenuCtrl]
-angular.module('starter.controller').controller 'DbCtrl', ['$scope', 'model', '$location', DbCtrl]
-angular.module('starter.controller').controller 'DbListCtrl', ['$scope', 'collection', '$location', '$ionicPopup', DbListCtrl]
+					.catch alert
