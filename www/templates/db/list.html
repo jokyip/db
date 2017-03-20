@@ -10,12 +10,15 @@
 		<ion-list>
 			<ion-item ng-repeat="model in collection.models" on-tap="$event.stopPropagation(); read('{{model.id}}');">				
 				<div class='row'>
-					<div class='col-50'>
-						{{model.name}}
-					</div>
-					<div class='col-50'>
-						{{model.createdBy}}
-					</div>
+					<div class='col-40'>
+          	{{model.name}}
+          </div>
+          <div class='col-20'>
+          	{{model.createdBy}}
+          </div>
+          <div class='col-40'>
+          	{{model.updatedAt | date:'d.MMM.yyyy H:mm a'}}
+          </div>
 				</div>
 			</ion-item>
 		</ion-list>
