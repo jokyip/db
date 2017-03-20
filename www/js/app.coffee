@@ -29,7 +29,7 @@ angular
 			templateUrl: "templates/menu.html"
 	
 		# Db
-		$stateProvider.state 'app.db',
+		$stateProvider.state 'app.dbList',
 			url: "/db"
 			cache: false
 			views:
@@ -42,12 +42,12 @@ angular
 					ret = new cliModel.DbList()
 					ret.$fetch()
 					
-		$stateProvider.state 'app.dbMe',
-			url: "/db/me"
+		$stateProvider.state 'app.dbMyList',
+			url: "/db/mylist"
 			cache: false
 			views:
 				'menuContent':
-					templateUrl: "templates/db/listMe.html"
+					templateUrl: "templates/db/myList.html"
 					controller: 'DbListCtrl'
 			resolve:
 				cliModel: 'model'	
@@ -82,4 +82,4 @@ angular
 					ret = new cliModel.Db({id: id})
 					ret.$fetch()			
 				
-		$urlRouterProvider.otherwise('/db')
+		$urlRouterProvider.otherwise('/db/mylist')

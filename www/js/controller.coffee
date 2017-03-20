@@ -22,7 +22,7 @@ angular
 			save: ->			
 				$scope.model.$save()
 					.then ->
-						$location.url "/db"
+						$location.url "/db/myList"
 					.catch (err) ->
 						alert {data:{error:"Name already exists. Please choose other name."}}
 						
