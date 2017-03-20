@@ -13,11 +13,8 @@
           <div class='col-40'>
           	{{model.name}}
           </div>
-          <div class='col-20'>
-          	{{model.createdBy}}
-          </div>
           <div class='col-40'>
-          	{{model.updatedAt | date:'d.MMM.yyyy H:mm a'}}
+          	Last updated : {{model.updatedAt | date:'d.MMM.yyyy H:mm a'}}
           </div>
 				<ion-option-button class="button button-positive icon-left ion-edit" on-tap="$event.stopPropagation(); edit('{{model.id}}')">Edit</ion-option-button>
 				<ion-option-button class="button button-assertive icon-left ion-trash-b" on-tap="$event.stopPropagation(); delete(model)">Delete</ion-option-button>
