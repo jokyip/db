@@ -43,3 +43,21 @@ angular
 					.then ->
 						$scope.$broadcast('scroll.infiniteScrollComplete')
 					.catch alert
+
+	.controller 'ItemCtrl', ($scope, $log, $ionicActionSheet) ->
+		_.extend $scope,
+			showAction: ->
+				$ionicActionSheet.show
+					buttons: [
+						{ text: 'Change Password', cmd: 'changepwd' }
+						{ text: 'Export', cmd: 'export' }
+					]
+					buttonClicked: (index, button) ->
+						$scope.model.cmd button.cmd
+						return true
+			changepwd: ->
+				test = $scope.model
+			Export: ->
+				test = $scope.model
+
+

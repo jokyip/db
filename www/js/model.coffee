@@ -15,6 +15,9 @@ angular.module 'starter.model', ['PageableAR']
 		class Db extends pageableAR.Model
 			$urlRoot: "api/db"
 			
+			cfg: ->
+				JSON.stringify {url:"#{env.mongo.url}#{@.name}", updatedAt:@.updatedAt}
+			
 		class DbList extends pageableAR.PageableCollection
 			model: Db
 		
