@@ -1,25 +1,26 @@
 <ion-view>
-	<ion-nav-buttons side="left">
+  <ion-nav-buttons side="left">
       <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-      <h1 class='title'>All Database</h1>
+      <h1 class="title">All Database</h1>
       <div class="buttons">
-        <button class="button icon-right ion-plus-round" on-tap="$event.stopPropagation(); create()"></button>
-      </div>	
-    </ion-nav-buttons>
-	<ion-content>
-		<ion-list>
-			<ion-item ng-repeat="model in collection.models" on-tap="$event.stopPropagation(); read('{{model.id}}');">				
-				<div class='row'>
-					<div class='col-40'>
-          	{{model.name}}
-          </div>
-          <div class='col-20'>
-          	{{model.createdBy}}
-          </div>
-				</div>
-			</ion-item>
-		</ion-list>
-		<ion-infinite-scroll ng-if="collection.state.skip < collection.state.count" on-infinite="loadMore()">
-		</ion-infinite-scroll>	
-	</ion-content>
-</ion-view>
+          <button class="button icon-right ion-plus-round" on-tap="$event.stopPropagation(); create()"></button>
+      </div>
+  </ion-nav-buttons>
+
+<ion-content>
+  <ion-list>
+    <ion-item
+      class="item-avatar item-complex"
+      on-hold="showAction()"
+      ng-repeat="model in collection.models"
+      ng-controller="ItemCtrl"
+      ng-include="'templates/db/item.html'">
+    </ion-item>
+    <ion-infinite-scroll
+      ng-if="collection.state.skip < collection.state.count"
+      on-infinite="loadMore()">
+    </ion-infinite-scroll>
+  </ion-list>
+</ion-content>
+
+
