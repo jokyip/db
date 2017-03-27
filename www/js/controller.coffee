@@ -44,7 +44,7 @@ angular
 						$scope.$broadcast('scroll.infiniteScrollComplete')
 					.catch alert
 
-	.controller 'ItemCtrl', ($scope, $log, $ionicActionSheet) ->
+	.controller 'ItemCtrl', ($scope, $log, $ionicActionSheet, $location) ->
 		_.extend $scope,
 			showAction: ->
 				$ionicActionSheet.show
@@ -53,11 +53,10 @@ angular
 						{ text: 'Export', cmd: 'export' }
 					]
 					buttonClicked: (index, button) ->
-						$scope.model.cmd button.cmd
+						if button.cmd == 'changepwd'
+							$location.url "/db/edit/#{$scope.model.id}"
+						else
+							$scope.model.cmd button.cmd
 						return true
-			changepwd: ->
-				test = $scope.model
-			Export: ->
-				test = $scope.model
-
+					
 

@@ -17,6 +17,8 @@ angular.module 'starter.model', ['PageableAR']
 			
 			cfg: ->
 				JSON.stringify {url:"#{env.mongo.url}#{@.name}", updatedAt:@.updatedAt}
+			cmd: (op)->
+				@$save {}, url: "#{@$url()}/#{op}"
 			
 		class DbList extends pageableAR.PageableCollection
 			model: Db
