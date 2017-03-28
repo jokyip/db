@@ -36,4 +36,9 @@ module.exports =
 		sails.services.crud
 			.find(req)
 			.then res.ok
-			.catch res.serverError				
+			.catch res.serverError
+
+	export: (req, res) ->
+		data = actionUtil.parseValues(req)
+		sails.services.db.export data
+		res.ok()

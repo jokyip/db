@@ -8,3 +8,4 @@ module.exports =
 			create:		['isAuth', 'setOwner']
 			update:		['isAuth', 'isOwner']
 			destroy:	['isAuth', 'isOwner']
+			export:		['isAuth', 'isOwner']

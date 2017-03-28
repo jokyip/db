@@ -9,4 +9,7 @@ module.exports =
 			controller:		'DbController'
 			action:			'find'
 			sort:			
-				name:	'asc'		
+				name:	'asc'
+		'PUT /api/db/:id/export':
+			controller:		'DBController'
+			action:			'export'		
