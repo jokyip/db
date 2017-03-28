@@ -3,3 +3,8 @@
   <h2>{{model.name}}</h2>
   <p>{{model.cfg()}}</p>
 </div>
+<ion-option-button 
+  class="button button-assertive icon-left ion-trash-b"
+  on-tap="delete(model)">
+  Delete
+</ion-option-button>
