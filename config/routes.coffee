@@ -13,3 +13,6 @@ module.exports =
 		'GET /api/db/content/:id':
 			controller:		'DBController'
 			action:			'export'		
+		'PUT /api/db/content/:id':
+			controller:		'DBController'
+			action:			'import'		

@@ -1,5 +1,6 @@
 actionUtil = require 'sails/lib/hooks/blueprints/actionUtil'
 backup = require 'mongodb-backup'
+restore = require 'mongodb-restore'
 
 module.exports =
 	create: (req, res) ->
@@ -49,9 +50,19 @@ module.exports =
 				opts = 
 					uri: "#{process.env.DBURL}#{result.name}"
 					root: "#{process.env.BkDIR}"
-					parser: 'json'
-					metadata: true
 				backup opts
 				res.ok()
 			.catch res.serverError
-
+	import: (req, res) ->
+		pk = actionUtil.requirePk req
+		Model = actionUtil.parseModel(req)
+		Model.findOne(pk)
+			.populateAll()
+			.then (result) ->
+				sails.log.info "restore db: #{process.env.DBURL}#{result.name}_restore from: #{process.env.BkDIR}/#{result.name}"
+				opts2 = 
+					uri: "#{process.env.DBURL}#{result.name}_restore"
+					root: "#{process.env.BkDIR}/#{result.name}"
+				restore opts2
+				res.ok()
+			.catch res.serverError
