@@ -30,6 +30,12 @@ describe 'DbController', ->
       .get("/api/db/#{id}")
       .set('Authorization',"Bearer #{token}")
       .expect 200
+    
+    it 'Backup Db',  ->
+      request(sails.hooks.http.app)
+      .get("/api/db/content/#{id}")
+      .set('Authorization',"Bearer #{token}")
+      .expect 200
 
     it 'Delete Db', ->
       request(sails.hooks.http.app)
