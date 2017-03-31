@@ -10,6 +10,6 @@ module.exports =
 			action:			'find'
 			sort:			
 				name:	'asc'
-		'PUT /api/db/:id/export':
+		'GET /api/db/content/:id':
 			controller:		'DBController'
 			action:			'export'		
