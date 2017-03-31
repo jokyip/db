@@ -45,10 +45,10 @@ module.exports =
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
-				sails.log.info "backup db: #{process.env.DBURL}#{result.name}"
+				sails.log.info "backup db: #{process.env.DBURL}#{result.name} to path: #{process.env.BkDIR}"
 				opts = 
 					uri: "#{process.env.DBURL}#{result.name}"
-					root: '/tmp/data'
+					root: "#{process.env.BkDIR}"
 					parser: 'json'
 					metadata: true
 				backup opts
