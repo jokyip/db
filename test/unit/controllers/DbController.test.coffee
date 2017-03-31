@@ -2,6 +2,7 @@ env = require '../../env.coffee'
 request = require 'supertest-as-promised'
 oauth2 = require 'oauth2_client'
 Promise = require 'bluebird'
+MongoClient = require('mongodb').MongoClient
 
 describe 'DbController', ->
 
@@ -30,6 +31,15 @@ describe 'DbController', ->
       .get("/api/db/#{id}")
       .set('Authorization',"Bearer #{token}")
       .expect 200
+ 
+    it 'Create some data', ->
+      url = "#{env.db}unitTest"
+      MongoClient.connect url, (err, db) ->
+        collection = db.collection('product')
+        collection.insertMany [{ a: 1 }], (err, result) ->
+          expect(err).to.be.null
+          callback result
+        db.close()
     
     it 'Backup Db',  ->
       request(sails.hooks.http.app)
