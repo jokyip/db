@@ -47,6 +47,12 @@ describe 'DbController', ->
       .set('Authorization',"Bearer #{token}")
       .expect 200
 
+    it 'Restore Db',  ->
+      request(sails.hooks.http.app)
+      .put("/api/db/content/#{id}")
+      .set('Authorization',"Bearer #{token}")
+      .expect 200
+
     it 'Delete Db', ->
       request(sails.hooks.http.app)
       .del("/api/db/#{id}")
