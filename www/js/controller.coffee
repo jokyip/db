@@ -58,6 +58,7 @@ angular
 							$location.url "/db/edit/#{$scope.model.id}"
 						else
 							$scope.model.cmd button.cmd
+							$scope.collection.$refetch()
 						return true
 					
 

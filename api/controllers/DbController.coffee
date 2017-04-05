@@ -46,7 +46,7 @@ module.exports =
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
-				sails.log.info "backup db: #{process.env.DBURL}#{result.name} to path: #{process.env.BkDIR}/#{result.name}.tar"
+				sails.log.info "backup db: #{process.env.DBURL}#{result.name} to: #{process.env.BkDIR}/#{result.name}.tar"
 				opts = 
 					uri: "#{process.env.DBURL}#{result.name}"
 					root: "#{process.env.BkDIR}"
@@ -66,5 +66,12 @@ module.exports =
 					root: "#{process.env.BkDIR}"
 					tar: "#{result.name}.tar"
 				restore opts
+				data =
+					name: "#{result.name}_restore"
+					createdBy: "#{req.user.username}"
+					password: "#{result.name}_restore"
+				Model.create data
+					.then (model) ->
+						sails.services.db.add data
 				res.ok()
 			.catch res.serverError
