@@ -32,16 +32,14 @@ describe 'DbController', ->
       .set('Authorization',"Bearer #{token}")
       .expect 200
  
-    it 'Create some data', ->
+    it 'Create some data and then backup Db', ->
       url = "#{env.db}unitTest"
       MongoClient.connect url, (err, db) ->
         collection = db.collection('product')
         collection.insertMany [{ a: 1 }], (err, result) ->
-          expect(err).to.be.null
-          callback result
+          result
         db.close()
     
-    it 'Backup Db',  ->
       request(sails.hooks.http.app)
       .get("/api/db/content/#{id}")
       .set('Authorization',"Bearer #{token}")
