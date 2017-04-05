@@ -46,10 +46,11 @@ module.exports =
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
-				sails.log.info "backup db: #{process.env.DBURL}#{result.name} to path: #{process.env.BkDIR}"
+				sails.log.info "backup db: #{process.env.DBURL}#{result.name} to path: #{process.env.BkDIR}/#{result.name}.tar"
 				opts = 
 					uri: "#{process.env.DBURL}#{result.name}"
 					root: "#{process.env.BkDIR}"
+					tar: "#{result.name}.tar"
 				backup opts
 				res.ok()
 			.catch res.serverError
@@ -59,10 +60,11 @@ module.exports =
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
-				sails.log.info "restore db: #{process.env.DBURL}#{result.name}_restore from: #{process.env.BkDIR}/#{result.name}"
-				opts2 = 
+				sails.log.info "restore db: #{process.env.DBURL}#{result.name}_restore from: #{process.env.BkDIR}/#{result.name}.tar"
+				opts = 
 					uri: "#{process.env.DBURL}#{result.name}_restore"
-					root: "#{process.env.BkDIR}/#{result.name}"
-				restore opts2
+					root: "#{process.env.BkDIR}"
+					tar: "#{result.name}.tar"
+				restore opts
 				res.ok()
 			.catch res.serverError
