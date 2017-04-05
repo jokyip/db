@@ -50,6 +50,7 @@ angular
 				$ionicActionSheet.show
 					buttons: [
 						{ text: 'Change Password', cmd: 'changepwd' }
+						{ text: 'Import', cmd: 'import' }
 						{ text: 'Export', cmd: 'export' }
 					]
 					buttonClicked: (index, button) ->
