@@ -50,6 +50,7 @@ angular
 				$ionicActionSheet.show
 					buttons: [
 						{ text: 'Change Password', cmd: 'changepwd' }
+						{ text: 'Import', cmd: 'import' }
 						{ text: 'Export', cmd: 'export' }
 					]
 					buttonClicked: (index, button) ->
@@ -57,6 +58,7 @@ angular
 							$location.url "/db/edit/#{$scope.model.id}"
 						else
 							$scope.model.cmd button.cmd
+							$scope.collection.$refetch()
 						return true
 					
 
