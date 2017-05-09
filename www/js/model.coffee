@@ -15,6 +15,14 @@ angular.module 'starter.model', ['PageableAR']
 		class Db extends pageableAR.Model
 			$urlRoot: "api/db"
 			
+			cfg: ->
+				JSON.stringify {url:"#{env.mongo.url}#{@.name}", updatedAt:@.updatedAt}
+			cmd: (op)->
+				if op == "import"
+					@$save {}, url: "#{@$urlRoot}/content/#{@id}"
+				else
+					@$fetch {url: "#{@$urlRoot}/content/#{@id}"}
+			
 		class DbList extends pageableAR.PageableCollection
 			model: Db
 		

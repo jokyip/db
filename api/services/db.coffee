@@ -50,5 +50,7 @@ module.exports =
 						return err
 					sails.log.info "DB user #{database.createdBy} is removed."		
 					existingDb.close
-			db.close				
-									
+			db.close
+
+	export: (database) ->
+		return

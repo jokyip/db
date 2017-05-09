@@ -43,3 +43,22 @@ angular
 					.then ->
 						$scope.$broadcast('scroll.infiniteScrollComplete')
 					.catch alert
+
+	.controller 'ItemCtrl', ($scope, $log, $ionicActionSheet, $location) ->
+		_.extend $scope,
+			showAction: ->
+				$ionicActionSheet.show
+					buttons: [
+						{ text: 'Change Password', cmd: 'changepwd' }
+						{ text: 'Import', cmd: 'import' }
+						{ text: 'Export', cmd: 'export' }
+					]
+					buttonClicked: (index, button) ->
+						if button.cmd == 'changepwd'
+							$location.url "/db/edit/#{$scope.model.id}"
+						else
+							$scope.model.cmd button.cmd
+							$scope.collection.$refetch()
+						return true
+					
+
