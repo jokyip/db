@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "angular-file-saver": "^1.1.3",
     "bluebird": "^3.4.3",
     "coffee-script": "^1.12.4",
     "dateformat": "^2.0.0",
@@ -19,6 +20,7 @@
     "mongodb-backup": "^1.6.9",
     "mongodb-restore": "^1.6.2",
     "needle": "^1.5.2",
+    "ng-file-upload": "^12.2.13",
     "oauth2_client": "*",
     "passport": "^0.3.2",
     "passport-http-bearer": "^1.0.1",

@@ -49,10 +49,10 @@ module.exports =
 				sails.log.info "backup db: #{process.env.DBURL}#{result.name} to: #{process.env.BkDIR}/#{result.name}.tar"
 				opts = 
 					uri: "#{process.env.DBURL}#{result.name}"
-					root: "#{process.env.BkDIR}"
-					tar: "#{result.name}.tar"
+					parser: "json"
+					stream: res
 				backup opts
-				res.ok()
+				res.attachment "export.tar.xz"
 			.catch res.serverError
 	import: (req, res) ->
 		pk = actionUtil.requirePk req

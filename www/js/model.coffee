@@ -1,9 +1,11 @@
 env = require './env.coffee'
 require 'PageableAR'
+require 'angular-file-saver'
+require 'ng-file-upload'
 		
-angular.module 'starter.model', ['PageableAR']
+angular.module 'starter.model', ['PageableAR', 'ngFileSaver', 'ngFileUpload']
 	
-	.factory 'model', (pageableAR, $filter) ->
+	.factory 'model', (pageableAR, $http, $filter, FileSaver) ->
 
 		class User extends pageableAR.Model
 			$urlRoot: "org/api/users/"
@@ -21,7 +23,11 @@ angular.module 'starter.model', ['PageableAR']
 				if op == "import"
 					@$save {}, url: "#{@$urlRoot}/content/#{@id}"
 				else
-					@$fetch {url: "#{@$urlRoot}/content/#{@id}"}
+					$http
+						.get "#{@$urlRoot}/content/#{@id}", responseType: 'blob'
+						.then (res) ->
+							filename = res.headers('Content-Disposition').match(/filename="(.+)"/)[1]
+							FileSaver.saveAs res.data, filename
 			
 		class DbList extends pageableAR.PageableCollection
 			model: Db
