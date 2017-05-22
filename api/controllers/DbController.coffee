@@ -1,6 +1,7 @@
 actionUtil = require 'sails/lib/hooks/blueprints/actionUtil'
 backup = require 'mongodb-backup'
 restore = require 'mongodb-restore'
+Promise = require 'bluebird'
 
 module.exports =
 	create: (req, res) ->
@@ -46,13 +47,12 @@ module.exports =
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
-				sails.log.info "backup db: #{process.env.DBURL}#{result.name} to: #{process.env.BkDIR}/#{result.name}.tar"
 				opts = 
 					uri: "#{process.env.DBURL}#{result.name}"
 					parser: "json"
 					stream: res
 				backup opts
-				res.attachment "export.tar.xz"
+				res.attachment "#{result.name}.tar.xz"
 			.catch res.serverError
 	import: (req, res) ->
 		pk = actionUtil.requirePk req
@@ -60,18 +60,17 @@ module.exports =
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
-				sails.log.info "restore db: #{process.env.DBURL}#{result.name}_restore from: #{process.env.BkDIR}/#{result.name}.tar"
-				opts = 
-					uri: "#{process.env.DBURL}#{result.name}_restore"
-					root: "#{process.env.BkDIR}"
-					tar: "#{result.name}.tar"
-				restore opts
-				data =
-					name: "#{result.name}_restore"
-					createdBy: "#{req.user.username}"
-					password: "#{result.name}_restore"
-				Model.create data
-					.then (model) ->
-						sails.services.db.add data
-				res.ok()
-			.catch res.serverError
+				new Promise (resolve, reject) ->
+					req
+						.file 'file'
+						.on 'error', reject
+						.on 'data', (file) ->
+							opts =
+								uri: "#{process.env.DBURL}#{result.name}"
+								parser: "json"
+								stream: file
+								drop: true
+							restore opts
+							return resolve()
+			.then res.ok, (err) ->
+				res.serverError err.toString()
