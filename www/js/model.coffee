@@ -29,6 +29,7 @@ angular.module 'starter.model', ['PageableAR', 'ngFileSaver', 'ngFileUpload']
 								data: file: files[0]
 							.then ->
 								$log.info "Import completed"
+								$state.reload()
 							.catch (res) ->
 								$log.error res.data
 							
