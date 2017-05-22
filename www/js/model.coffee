@@ -40,7 +40,10 @@ angular.module 'starter.model', ['PageableAR', 'ngFileSaver', 'ngFileUpload']
 							filename = res.headers('Content-Disposition').match(/filename="(.+)"/)[1]
 							FileSaver.saveAs res.data, filename
 						.then ->
+							$log.info "Export completed"
 							$state.reload()
+						.catch (res) ->
+							$log.error res.data
 			
 		class DbList extends pageableAR.PageableCollection
 			model: Db

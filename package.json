@@ -17,6 +17,7 @@
     "https-proxy-agent": "^1.0.0",
     "include-all": "^4.0.0",
     "lodash": "^4.17.4",
+    "log_toast": "0.0.6",
     "mongodb-backup": "^1.6.9",
     "mongodb-restore": "^1.6.2",
     "needle": "^1.5.2",
