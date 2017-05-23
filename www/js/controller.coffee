@@ -33,23 +33,6 @@ angular
 				$location.url "/db/create"
 			edit: (id) ->
 				$location.url "/db/edit/#{id}"
-			import: (obj) ->
-				$ionicPopup.show({
-					templateUrl: "templates/db/import.html"
-					title: 'Import'
-					buttons: [{
-							text: 'Cancel',
-							onTap: ->
-								return
-						},
-						{
-							text: 'Confirm',
-							onTap: ->
-								return
-						}]
-				})
-						
-						
 			delete: (obj) ->
 				$ionicPopup.confirm title: 'Delete Database', template: 'Please note that all data stored in this database will be loss. Do you still proceed?'
 					.then (res) ->
