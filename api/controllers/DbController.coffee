@@ -47,16 +47,19 @@ module.exports =
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
+				dburl = process.env.DBURL.split("/")
 				opts = 
-					uri: "#{process.env.DBURL}#{result.name}"
+					uri: "#{dburl.slice(0, dburl.length-1).join('/')}/#{result.name}"
 					parser: "json"
 					stream: res
+					logger: "log/#{result.name}.log"
 				backup opts
 				res.attachment "#{result.name}.tar.xz"
 			.catch res.serverError
 	import: (req, res) ->
 		pk = actionUtil.requirePk req
 		Model = actionUtil.parseModel(req)
+		data = actionUtil.parseValues(req)
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
@@ -65,9 +68,12 @@ module.exports =
 						.file 'file'
 						.on 'error', reject
 						.on 'data', (file) ->
+							dburls = process.env.DBURL.split("/")
+							urls= "#{dburls.slice(0, dburls.length-1).join('/')}/#{result.name}".split("@")
 							opts =
-								uri: "#{process.env.DBURL}#{result.name}"
+								uri: "#{urls[0]}#{result.createdBy}:#{data.password}@#{urls[1]}"
 								parser: "json"
+								logger: "log/#{result.name}.log"
 								stream: file
 								drop: true
 							restore opts
