@@ -27,7 +27,7 @@ angular.module 'starter.model', ['PageableAR', 'ngFileSaver', 'ngFileUpload']
 							.upload
 								method: 'PUT'
 								url: "#{@$urlRoot}/content/#{@id}"
-								data: file: files[0], password:""
+								data: file: files[0]
 							.then ->
 								$log.info "Import completed"
 								$state.reload()

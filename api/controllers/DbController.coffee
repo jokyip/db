@@ -59,7 +59,6 @@ module.exports =
 	import: (req, res) ->
 		pk = actionUtil.requirePk req
 		Model = actionUtil.parseModel(req)
-		data = actionUtil.parseValues(req)
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
@@ -69,9 +68,8 @@ module.exports =
 						.on 'error', reject
 						.on 'data', (file) ->
 							dburls = process.env.DBURL.split("/")
-							urls= "#{dburls.slice(0, dburls.length-1).join('/')}/#{result.name}".split("@")
 							opts =
-								uri: "#{urls[0]}#{result.createdBy}:#{data.password}@#{urls[1]}"
+								uri: "#{dburls.slice(0, dburls.length-1).join('/')}/#{result.name}" 
 								parser: "json"
 								logger: "log/#{result.name}.log"
 								stream: file
