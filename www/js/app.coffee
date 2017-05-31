@@ -1,4 +1,5 @@
 env = require './env.coffee'
+require 'log_toast'
 
 angular
 	.module 'starter', [
@@ -10,6 +11,7 @@ angular
 		'ngFancySelect', 
 		'pascalprecht.translate', 
 		'locale'
+		'logToast'
 	]
 
 	.run (authService) ->

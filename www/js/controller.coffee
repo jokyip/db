@@ -32,7 +32,7 @@ angular
 			create: ->
 				$location.url "/db/create"
 			edit: (id) ->
-				$location.url "/db/edit/#{id}"	
+				$location.url "/db/edit/#{id}"
 			delete: (obj) ->
 				$ionicPopup.confirm title: 'Delete Database', template: 'Please note that all data stored in this database will be loss. Do you still proceed?'
 					.then (res) ->
@@ -50,15 +50,10 @@ angular
 				$ionicActionSheet.show
 					buttons: [
 						{ text: 'Change Password', cmd: 'changepwd' }
-						{ text: 'Import', cmd: 'import' }
-						{ text: 'Export', cmd: 'export' }
 					]
 					buttonClicked: (index, button) ->
 						if button.cmd == 'changepwd'
 							$location.url "/db/edit/#{$scope.model.id}"
-						else
-							$scope.model.cmd button.cmd
-							$scope.collection.$refetch()
 						return true
 					
 
