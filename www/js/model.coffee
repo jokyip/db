@@ -18,8 +18,7 @@ angular.module 'starter.model', ['PageableAR', 'ngFileSaver', 'ngFileUpload']
 			$urlRoot: "api/db"
 			
 			cfg: ->
-				mongourl = env.mongo.url.split("/")
-				JSON.stringify {url:"#{mongourl.slice(0, mongourl.length - 1).join('/')}/#{@.name}", updatedAt:@.updatedAt}
+				JSON.stringify {url:"#{env.mongo.url}#{@.name}", updatedAt:@.updatedAt}
 			cmd: (op, files)->
 				if op == "import"
 					if files.length!=0

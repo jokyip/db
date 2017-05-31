@@ -47,9 +47,8 @@ module.exports =
 		Model.findOne(pk)
 			.populateAll()
 			.then (result) ->
-				dburl = process.env.DBURL.split("/")
 				opts = 
-					uri: "#{dburl.slice(0, dburl.length-1).join('/')}/#{result.name}"
+					uri: "#{process.env.DBURL}#{result.name}"
 					parser: "json"
 					stream: res
 					logger: "log/#{result.name}.log"
@@ -67,9 +66,8 @@ module.exports =
 						.file 'file'
 						.on 'error', reject
 						.on 'data', (file) ->
-							dburls = process.env.DBURL.split("/")
 							opts =
-								uri: "#{dburls.slice(0, dburls.length-1).join('/')}/#{result.name}" 
+								uri: "#{process.env.DBURL}#{result.name}" 
 								parser: "json"
 								logger: "log/#{result.name}.log"
 								stream: file

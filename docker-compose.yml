@@ -1,18 +1,18 @@
 version: '2'
 services:
-  db_mongo:
-    image: mongo
-    ports:
-      - 27017
-    command: mongod --directoryperdb
-
   db:
-    depends_on:
-      - db_mongo
     image: jokyip/db:latest
+    external_links:
+      - mongo
+    networks:
+      - mongo_default
     ports:
       - 8222:1337
     env_file:
       - ./.env
       - ../.env
     entrypoint: top -b -d 1000
+
+networks:
+    mongo_default:
+      external: true
