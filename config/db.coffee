@@ -6,7 +6,7 @@ _.forEach ['ADMIN_DB','ADMIN_ROLE'], (prop) ->
 
 module.exports =
 	dbAdmin:
-		url:		process.env.ADMIN_DB
+		url:		"#{process.env.DBURL}#{process.env.ADMIN_DB}"
 	db:
 		default:
 			roles:	process.env.ADMIN_ROLE?.split(' ') || [
