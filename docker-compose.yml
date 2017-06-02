@@ -2,8 +2,6 @@ version: '2'
 services:
   db:
     image: jokyip/db:latest
-    external_links:
-      - mongo
     networks:
       - mongo_default
     ports:
