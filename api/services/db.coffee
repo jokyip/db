@@ -9,11 +9,11 @@ module.exports =
 				return res.serverError
 			newDb = db.db database.name
 			sails.log.info "DB #{database.name} is created."
-			newDb.addUser database.createdBy, database.password, {roles: sails.config.db.default.roles}, (err, result) ->
+			newDb.addUser database.username, database.password, {roles: sails.config.db.default.roles}, (err, result) ->
 				if err
 					sails.log.error err
 					return err
-				sails.log.info "DB user #{database.createdBy} is created."	
+				sails.log.info "DB user #{database.username} is created."	
 				newDb.close
 			db.close
 			
@@ -24,14 +24,14 @@ module.exports =
 				sails.log.error err
 				return res.serverError
 			existingDb = db.db database.name
-			existingDb.removeUser database.createdBy, (err, result) ->
+			existingDb.removeUser database.username, (err, result) ->
 				if err
 					sails.log.error err
-				existingDb.addUser database.createdBy, database.password, {roles: sails.config.db.default.roles}, (err2, result) ->
+				existingDb.addUser database.username, database.password, {roles: sails.config.db.default.roles}, (err2, result) ->
 					if err2
 						sails.log.error err2
 					else						
-						sails.log.info "The password of DB user #{database.createdBy} is updated."						
+						sails.log.info "The password of DB user #{database.user} is updated."						
 			existingDb.close
 			db.close		
 			
@@ -44,11 +44,11 @@ module.exports =
 			existingDb = db.db database.name
 			sails.log.info "DB #{database.name} is removed."
 			existingDb.dropDatabase (err, result) ->
-				existingDb.removeUser database.createdBy, (err, result) ->
+				existingDb.removeUser database.username, (err, result) ->
 					if err
 						sails.log.error err
 						return err
-					sails.log.info "DB user #{database.createdBy} is removed."		
+					sails.log.info "DB user #{database.username} is removed."		
 					existingDb.close
 			db.close
 

@@ -1,12 +1,8 @@
 _ = require 'lodash'
 
-_.forEach ['ADMIN_DB','ADMIN_ROLE'], (prop) ->
-	if not (prop of process.env)
-  	throw new Error "process.env.#{prop} not yet defined"
-
 module.exports =
 	dbAdmin:
-		url:		"#{process.env.DBURL}#{process.env.ADMIN_DB}"
+		url:		"#{process.env.DBURL}admin"
 	db:
 		default:
 			roles:	process.env.ADMIN_ROLE?.split(' ') || [

@@ -5,7 +5,7 @@ module.exports =
 			find:		['isAuth']
 			findByMe:	['isAuth', 'filterByOwner']
 			findOne:	['isAuth', 'filterByOwner']			
-			create:		['isAuth', 'setOwner']
+			create:		['isAuth', 'setOwner', 'setUsername']
 			update:		['isAuth', 'isOwner']
 			destroy:	['isAuth', 'isOwner']
 			export:		['isAuth', 'isOwner']
