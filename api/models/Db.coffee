@@ -54,7 +54,7 @@ module.exports =
 						sails.log.error err2
 						cb(err2)
 					else				
-						sails.log.info "The password of DB user #{values.user} is updated."						
+						sails.log.info "The password of DB user #{values.username} is updated."						
 			existingDb.close
 			db.close
 		cb()
