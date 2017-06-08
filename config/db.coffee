@@ -5,6 +5,6 @@ module.exports =
 		url:		"#{process.env.DBURL}admin"
 	db:
 		default:
-			roles:	process.env.ADMIN_ROLE?.split(' ') || [
+			roles:	process.env.USER_ROLE?.split(' ') || [
         'dbOwner'
       ]
