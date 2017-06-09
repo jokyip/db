@@ -11,9 +11,9 @@
   <ion-list>
     <ion-item
       class="item-avatar item-complex"
-      on-hold="showAction()"
       ng-repeat="model in collection.models"
       ng-controller="ItemCtrl"
+      ng-init="all=true"
       ng-include="'templates/db/item.html'">
     </ion-item>
     <ion-infinite-scroll

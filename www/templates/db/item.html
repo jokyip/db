@@ -4,16 +4,19 @@
   <p>{{model.cfg()}}</p>
 </div>
 <ion-option-button
+  ng-hide="all"
   class="button-stable"
   on-tap="model.cmd('export')">
   Export
 </ion-option-button>
 <ion-option-button
+  ng-hide="all"
   class="button-positive"
   ngf-select="model.cmd('import', $files)">
   Import
 </ion-option-button>
-<ion-option-button 
+<ion-option-button
+  ng-hide="all" 
   class="button button-assertive icon-left ion-trash-b"
   on-tap="delete(model)">
   Delete
