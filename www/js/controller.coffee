@@ -1,8 +1,7 @@
 env = require './env.coffee'
-Promise = require 'promise'
+Promise = require 'bluebird'
 
 angular
-
 	.module 'starter.controller', [
 		'ionic' 
 		'ngCordova'
@@ -19,12 +18,20 @@ angular
 	.controller 'DbCtrl', ($scope, model, $location) ->
 		_.extend $scope,
 			model: model
-			save: ->			
-				$scope.model.$save()
+			save: ->
+				Promise
+					.each ['name', 'password'], (field) ->
+						if not $scope.model[field] 
+							alert {data:{error:"#{field} is required"}}
+							Promise.reject ""
 					.then ->
-						$location.url "/db/myList"
+						$scope.model.$save()
+							.then ->
+								$location.url "/db/myList"
+							.catch (err) ->
+								alert {data:{error:"Name already exists. Please choose other name."}}
 					.catch (err) ->
-						alert {data:{error:"Name already exists. Please choose other name."}}
+						return
 						
 	.controller 'DbListCtrl', ($scope, collection, $location, $ionicPopup) ->
 		_.extend $scope,

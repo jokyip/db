@@ -14,6 +14,7 @@ module.exports =
 			type: 'string'
 			required:	true
 			unique: 	true
+			notIn:	['db','admin']
 		username:
         		type:   'string'
         		required:       true
@@ -22,21 +23,27 @@ module.exports =
 			required:	true
 
 	beforeCreate: (values, cb) ->
-		MongoClient = mongodb.MongoClient
-		MongoClient.connect sails.config.dbAdmin.url, (err, db) ->
-			if err
-				sails.log.error err
-				cb(err)	
-			newDb = db.db values.name
-			sails.log.info "DB #{values.name} is created."
-			newDb.addUser values.username, values.password, {roles: sails.config.db.default.roles}, (err, result) ->
-				if err
-					sails.log.error err
-					cb(err)	
-				sails.log.info "DB user #{values.username} is created."	
-				newDb.close
-			db.close	
-		cb()
+		sails.models.db
+			.findOne name:values.name
+			.then (record) ->
+				if record 
+					cb("Database already exist")
+					return
+				MongoClient = mongodb.MongoClient
+				MongoClient.connect sails.config.dbAdmin.url, (err, db) ->
+					if err
+						sails.log.error err
+						cb(err)	
+					newDb = db.db values.name
+					sails.log.info "DB #{values.name} is created."
+					newDb.addUser values.username, values.password, {roles: sails.config.db.default.roles}, (err, result) ->
+						if err
+							sails.log.error err
+							cb(err)	
+						sails.log.info "DB user #{values.username} is created."	
+						newDb.close
+					db.close	
+				cb()
 
 	beforeUpdate: (values, cb) ->
 		MongoClient = mongodb.MongoClient
